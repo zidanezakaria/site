@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Georgia,"Times New Roman",serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#1c0a14,#4a1942 50%,#8b3a3a);
+}
+
+.container{
+    width:420px;
+    padding:35px;
+    border-radius:20px;
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(212,160,23,.35);
+    box-shadow:0 20px 40px rgba(0,0,0,.45);
+    color:white;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:12px;
+}
+
+.subtitle{
+    text-align:center;
+    margin-bottom:28px;
+    opacity:.9;
+    font-size:15px;
+}
+
+.profile{
+    background:rgba(255,255,255,.1);
+    border-radius:12px;
+    padding:18px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,.15);
+    font-size:15px;
+}
+
+.row:last-child{
+    border-bottom:none;
+}
+
+.label{
+    opacity:.8;
+}
+
+.logout-btn{
+    width:100%;
+    margin-top:24px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#d4a017;
+    color:#1c0a14;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.logout-btn:hover{
+    background:#f0c14b;
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="content" hidden>
+    <h1>Welcome, <span id="displayFirst"></span></h1>
+    <p class="subtitle">You entered the correct information.</p>
+    <div class="profile">
+        <div class="row"><span class="label">Name</span><span id="displayName"></span></div>
+        <div class="row"><span class="label">Email</span><span id="displayEmail"></span></div>
+        <div class="row"><span class="label">Phone</span><span id="displayPhone"></span></div>
+    </div>
+    <button class="logout-btn" type="button" id="logoutBtn">Log out</button>
+</div>
+
+<script>
+(function () {
+    const user = sessionStorage.getItem("loggedInUser");
+    if (!user) {
+        window.location.replace("index.html");
+        return;
+    }
+
+    let data;
+    try {
+        data = JSON.parse(user);
+    } catch (e) {
+        sessionStorage.removeItem("loggedInUser");
+        window.location.replace("index.html");
+        return;
+    }
+
+    document.getElementById("displayFirst").textContent = data.firstname;
+    document.getElementById("displayName").textContent = data.name;
+    document.getElementById("displayEmail").textContent = data.email;
+    document.getElementById("displayPhone").textContent = data.phone;
+    document.getElementById("content").hidden = false;
+
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+        sessionStorage.removeItem("loggedInUser");
+        window.location.replace("index.html");
+    });
+})();
+</script>
+
+</body>
+</html>

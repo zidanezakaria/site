@@ -1,0 +1,10 @@
+{
+  "name": "site",
+  "private": true,
+  "scripts": {
+    "dev": "vite --open --port 5500"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}
